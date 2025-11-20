@@ -85,6 +85,26 @@ if (app.Environment.IsDevelopment())
     app.UseHttpsRedirection();
 }
 
+// Log wwwroot path for debugging
+var webRootPath = app.Environment.WebRootPath;
+Log.Information("WebRootPath: {WebRootPath}", webRootPath);
+Log.Information("ContentRootPath: {ContentRootPath}", app.Environment.ContentRootPath);
+
+// Check if wwwroot exists
+if (Directory.Exists(webRootPath))
+{
+    Log.Information("wwwroot directory exists");
+    var files = Directory.GetFiles(webRootPath, "*", SearchOption.AllDirectories).Take(10);
+    foreach (var file in files)
+    {
+        Log.Information("Found file: {File}", file);
+    }
+}
+else
+{
+    Log.Error("wwwroot directory does NOT exist at {Path}", webRootPath);
+}
+
 app.UseStaticFiles();
 app.UseRouting();
 
