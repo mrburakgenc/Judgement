@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "37TjgAQ907A=",
+  "dgSpecHash": "v8jGmkKTOWs=",
   "success": true,
-  "projectFilePath": "D:\\Judgement\\lawyerwebsite\\LawyerWebsite.csproj",
+  "projectFilePath": "D:\\Judgement\\LawyerWebsite\\LawyerWebsite.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Unkn0wn\\.nuget\\packages\\bouncycastle.cryptography\\2.6.1\\bouncycastle.cryptography.2.6.1.nupkg.sha512",
     "C:\\Users\\Unkn0wn\\.nuget\\packages\\fluentvalidation\\11.5.1\\fluentvalidation.11.5.1.nupkg.sha512",

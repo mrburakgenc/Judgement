@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Judgement\\lawyerwebsite\\LawyerWebsite.csproj": {}
+    "D:\\Judgement\\LawyerWebsite\\LawyerWebsite.csproj": {}
   },
   "projects": {
-    "D:\\Judgement\\lawyerwebsite\\LawyerWebsite.csproj": {
+    "D:\\Judgement\\LawyerWebsite\\LawyerWebsite.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Judgement\\lawyerwebsite\\LawyerWebsite.csproj",
+        "projectUniqueName": "D:\\Judgement\\LawyerWebsite\\LawyerWebsite.csproj",
         "projectName": "LawyerWebsite",
-        "projectPath": "D:\\Judgement\\lawyerwebsite\\LawyerWebsite.csproj",
+        "projectPath": "D:\\Judgement\\LawyerWebsite\\LawyerWebsite.csproj",
         "packagesPath": "C:\\Users\\Unkn0wn\\.nuget\\packages\\",
-        "outputPath": "D:\\Judgement\\lawyerwebsite\\obj\\",
+        "outputPath": "D:\\Judgement\\LawyerWebsite\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -102,7 +102,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "c:\\program files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

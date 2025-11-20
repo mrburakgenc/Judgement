@@ -3288,3 +3288,4 @@ ORDER BY b0."PublishedAt" DESC
 2025-11-21 00:52:19.522 +03:00 [INF] Executed endpoint 'LawyerWebsite.Controllers.HomeController.Index (LawyerWebsite)'
 2025-11-21 00:52:19.524 +03:00 [INF] The response could not be cached for this request.
 2025-11-21 00:52:19.525 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5095/ - 200 null text/html; charset=utf-8 43.9398ms
+2025-11-21 01:06:48.264 +03:00 [INF] Application is shutting down...
