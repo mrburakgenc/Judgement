@@ -33,9 +33,9 @@ if (builder.Environment.IsProduction())
     {
         var possiblePaths = new[]
         {
+            "/app/out/wwwroot",  // Railway nixpacks default
             Path.Combine(builder.Environment.ContentRootPath, "wwwroot"),
             Path.Combine("/app/publish", "wwwroot"),
-            Path.Combine("/opt/app", "wwwroot"),
             "/app/wwwroot"
         };
 
@@ -46,7 +46,14 @@ if (builder.Environment.IsProduction())
             if (Directory.Exists(path))
             {
                 builder.Environment.WebRootPath = path;
-                Log.Information("✓ Set WebRootPath to: {Path}", path);
+                Log.Information("✓ FOUND! Set WebRootPath to: {Path}", path);
+
+                // List files in wwwroot to verify
+                var files = Directory.GetFiles(path, "*", SearchOption.TopDirectoryOnly).Take(5);
+                foreach (var file in files)
+                {
+                    Log.Information("  - {File}", Path.GetFileName(file));
+                }
                 break;
             }
         }
