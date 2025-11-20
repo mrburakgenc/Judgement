@@ -6,7 +6,7 @@ using LawyerWebsite.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configure Serilog
+// Configure Serilog first
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .Enrich.FromLogContext()
@@ -15,6 +15,48 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 builder.Host.UseSerilog();
+
+// Fix WebRootPath for Railway deployment
+if (builder.Environment.IsProduction())
+{
+    // List all directories in /app for debugging
+    Log.Information("Listing directories in /app:");
+    if (Directory.Exists("/app"))
+    {
+        foreach (var dir in Directory.GetDirectories("/app"))
+        {
+            Log.Information("Found directory: {Directory}", dir);
+        }
+    }
+
+    if (string.IsNullOrEmpty(builder.Environment.WebRootPath))
+    {
+        var possiblePaths = new[]
+        {
+            Path.Combine(builder.Environment.ContentRootPath, "wwwroot"),
+            Path.Combine("/app/publish", "wwwroot"),
+            Path.Combine("/opt/app", "wwwroot"),
+            "/app/wwwroot"
+        };
+
+        Log.Information("Searching for wwwroot in:");
+        foreach (var path in possiblePaths)
+        {
+            Log.Information("Checking: {Path}", path);
+            if (Directory.Exists(path))
+            {
+                builder.Environment.WebRootPath = path;
+                Log.Information("✓ Set WebRootPath to: {Path}", path);
+                break;
+            }
+        }
+
+        if (string.IsNullOrEmpty(builder.Environment.WebRootPath))
+        {
+            Log.Error("Could not find wwwroot directory in any of the expected locations");
+        }
+    }
+}
 
 // Add services to the container
 builder.Services.AddControllersWithViews();
