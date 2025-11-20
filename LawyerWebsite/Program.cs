@@ -91,10 +91,17 @@ try
 {
     Log.Information("Starting web application");
 
-    // Seed database
+    // Migrate and seed database
     using (var scope = app.Services.CreateScope())
     {
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+        // Auto migrate on production
+        Log.Information("Applying database migrations...");
+        await context.Database.MigrateAsync();
+
+        // Seed database
+        Log.Information("Seeding database...");
         await DbInitializer.SeedAsync(context);
     }
 
