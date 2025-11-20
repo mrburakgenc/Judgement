@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.FileProviders;
 using Serilog;
 using LawyerWebsite.Data;
 using LawyerWebsite.Services;
@@ -15,35 +16,6 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 builder.Host.UseSerilog();
-
-// Fix paths for Railway deployment
-if (builder.Environment.IsProduction())
-{
-    // Railway publishes to /app/out, set ContentRootPath accordingly
-    if (Directory.Exists("/app/out"))
-    {
-        builder.Environment.ContentRootPath = "/app/out";
-        builder.Environment.WebRootPath = "/app/out/wwwroot";
-
-        Log.Information("Set ContentRootPath to: /app/out");
-        Log.Information("Set WebRootPath to: /app/out/wwwroot");
-
-        // Verify wwwroot exists
-        if (Directory.Exists("/app/out/wwwroot"))
-        {
-            Log.Information("✓ wwwroot directory verified");
-            var subdirs = Directory.GetDirectories("/app/out/wwwroot");
-            foreach (var dir in subdirs)
-            {
-                Log.Information("  - {Dir}", Path.GetFileName(dir));
-            }
-        }
-        else
-        {
-            Log.Error("wwwroot not found at /app/out/wwwroot");
-        }
-    }
-}
 
 // Add services to the container
 builder.Services.AddControllersWithViews();
@@ -114,27 +86,33 @@ if (app.Environment.IsDevelopment())
     app.UseHttpsRedirection();
 }
 
-// Log wwwroot path for debugging
-var webRootPath = app.Environment.WebRootPath;
-Log.Information("WebRootPath: {WebRootPath}", webRootPath);
-Log.Information("ContentRootPath: {ContentRootPath}", app.Environment.ContentRootPath);
-
-// Check if wwwroot exists
-if (Directory.Exists(webRootPath))
+// Configure static files for Railway deployment
+if (app.Environment.IsProduction() && Directory.Exists("/app/out/wwwroot"))
 {
-    Log.Information("wwwroot directory exists");
-    var files = Directory.GetFiles(webRootPath, "*", SearchOption.AllDirectories).Take(10);
-    foreach (var file in files)
+    var staticFilePath = "/app/out/wwwroot";
+    var fileProvider = new PhysicalFileProvider(staticFilePath);
+
+    app.UseStaticFiles(new StaticFileOptions
     {
-        Log.Information("Found file: {File}", file);
+        FileProvider = fileProvider,
+        RequestPath = ""
+    });
+
+    Log.Information("✓ Static files configured with PhysicalFileProvider: {Path}", staticFilePath);
+
+    // List contents
+    var dirs = Directory.GetDirectories(staticFilePath);
+    foreach (var dir in dirs)
+    {
+        Log.Information("  Static dir: {Dir}", Path.GetFileName(dir));
     }
 }
 else
 {
-    Log.Error("wwwroot directory does NOT exist at {Path}", webRootPath);
+    app.UseStaticFiles();
+    Log.Information("Using default static files configuration");
 }
 
-app.UseStaticFiles();
 app.UseRouting();
 
 app.UseSession();
