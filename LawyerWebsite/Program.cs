@@ -69,6 +69,27 @@ builder.Services.AddResponseCaching();
 
 var app = builder.Build();
 
+// Fix WebRootPath for Railway (needed for file uploads)
+if (app.Environment.IsProduction() && Directory.Exists("/app/out/wwwroot"))
+{
+    app.Environment.WebRootPath = "/app/out/wwwroot";
+    Log.Information("Set WebRootPath to: /app/out/wwwroot");
+
+    // Ensure uploads directories exist
+    var uploadsPath = Path.Combine("/app/out/wwwroot", "uploads");
+    var blogUploadsPath = Path.Combine(uploadsPath, "blog");
+    var documentsUploadsPath = Path.Combine(uploadsPath, "documents");
+
+    Directory.CreateDirectory(uploadsPath);
+    Directory.CreateDirectory(blogUploadsPath);
+    Directory.CreateDirectory(documentsUploadsPath);
+
+    Log.Information("✓ Created uploads directories");
+    Log.Information("  - {Path}", uploadsPath);
+    Log.Information("  - {Path}", blogUploadsPath);
+    Log.Information("  - {Path}", documentsUploadsPath);
+}
+
 // Configure the HTTP request pipeline
 if (!app.Environment.IsDevelopment())
 {
