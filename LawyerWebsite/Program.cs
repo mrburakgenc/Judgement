@@ -16,51 +16,31 @@ Log.Logger = new LoggerConfiguration()
 
 builder.Host.UseSerilog();
 
-// Fix WebRootPath for Railway deployment
+// Fix paths for Railway deployment
 if (builder.Environment.IsProduction())
 {
-    // List all directories in /app for debugging
-    Log.Information("Listing directories in /app:");
-    if (Directory.Exists("/app"))
+    // Railway publishes to /app/out, set ContentRootPath accordingly
+    if (Directory.Exists("/app/out"))
     {
-        foreach (var dir in Directory.GetDirectories("/app"))
-        {
-            Log.Information("Found directory: {Directory}", dir);
-        }
-    }
+        builder.Environment.ContentRootPath = "/app/out";
+        builder.Environment.WebRootPath = "/app/out/wwwroot";
 
-    if (string.IsNullOrEmpty(builder.Environment.WebRootPath))
-    {
-        var possiblePaths = new[]
-        {
-            "/app/out/wwwroot",  // Railway nixpacks default
-            Path.Combine(builder.Environment.ContentRootPath, "wwwroot"),
-            Path.Combine("/app/publish", "wwwroot"),
-            "/app/wwwroot"
-        };
+        Log.Information("Set ContentRootPath to: /app/out");
+        Log.Information("Set WebRootPath to: /app/out/wwwroot");
 
-        Log.Information("Searching for wwwroot in:");
-        foreach (var path in possiblePaths)
+        // Verify wwwroot exists
+        if (Directory.Exists("/app/out/wwwroot"))
         {
-            Log.Information("Checking: {Path}", path);
-            if (Directory.Exists(path))
+            Log.Information("✓ wwwroot directory verified");
+            var subdirs = Directory.GetDirectories("/app/out/wwwroot");
+            foreach (var dir in subdirs)
             {
-                builder.Environment.WebRootPath = path;
-                Log.Information("✓ FOUND! Set WebRootPath to: {Path}", path);
-
-                // List files in wwwroot to verify
-                var files = Directory.GetFiles(path, "*", SearchOption.TopDirectoryOnly).Take(5);
-                foreach (var file in files)
-                {
-                    Log.Information("  - {File}", Path.GetFileName(file));
-                }
-                break;
+                Log.Information("  - {Dir}", Path.GetFileName(dir));
             }
         }
-
-        if (string.IsNullOrEmpty(builder.Environment.WebRootPath))
+        else
         {
-            Log.Error("Could not find wwwroot directory in any of the expected locations");
+            Log.Error("wwwroot not found at /app/out/wwwroot");
         }
     }
 }
