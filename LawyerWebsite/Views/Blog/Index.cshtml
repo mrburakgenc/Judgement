@@ -1,0 +1,132 @@
+@model List<LawyerWebsite.Models.Entities.BlogPost>
+@{
+    ViewData["Title"] = "Blog Yazıları";
+    Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+
+<div class="page-content">
+<div class="container my-5">
+    <div class="row">
+        <!-- Blog Posts -->
+        <div class="col-lg-8">
+            <h1 class="mb-4">Blog Yazıları</h1>
+
+            @if (Model != null && Model.Any())
+            {
+                foreach (var post in Model)
+                {
+                    <div class="card mb-4">
+                        <div class="row g-0">
+                            @if (!string.IsNullOrEmpty(post.FeaturedImage))
+                            {
+                                <div class="col-md-4">
+                                    <img src="@post.FeaturedImage" class="img-fluid rounded-start h-100" alt="@post.Title" style="object-fit: cover;">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        @if (post.Category != null)
+                                        {
+                                            <span class="badge bg-primary mb-2">@post.Category.Name</span>
+                                        }
+                                        <h5 class="card-title">
+                                            <a href="/blog/@post.Slug" class="text-decoration-none text-dark">@post.Title</a>
+                                        </h5>
+                                        <p class="card-text">@post.Summary</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <small class="text-muted">
+                                                <i class="bi bi-calendar me-1"></i>@post.PublishedAt?.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("tr-TR"))
+                                                <i class="bi bi-eye ms-3 me-1"></i>@post.ViewCount görüntülenme
+                                            </small>
+                                            <a href="/blog/@post.Slug" class="btn btn-sm btn-outline-primary">Devamını Oku</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-12">
+                                    <div class="card-body">
+                                        @if (post.Category != null)
+                                        {
+                                            <span class="badge bg-primary mb-2">@post.Category.Name</span>
+                                        }
+                                        <h5 class="card-title">
+                                            <a href="/blog/@post.Slug" class="text-decoration-none text-dark">@post.Title</a>
+                                        </h5>
+                                        <p class="card-text">@post.Summary</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <small class="text-muted">
+                                                <i class="bi bi-calendar me-1"></i>@post.PublishedAt?.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("tr-TR"))
+                                                <i class="bi bi-eye ms-3 me-1"></i>@post.ViewCount görüntülenme
+                                            </small>
+                                            <a href="/blog/@post.Slug" class="btn btn-sm btn-outline-primary">Devamını Oku</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+
+                <!-- Pagination -->
+                @if (ViewBag.TotalPages > 1)
+                {
+                    <nav aria-label="Blog pagination">
+                        <ul class="pagination justify-content-center">
+                            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                            {
+                                <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                                    <a class="page-link" asp-action="Index" asp-route-page="@i" asp-route-categoryId="@ViewBag.CategoryId">@i</a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                }
+            }
+            else
+            {
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle me-2"></i>Henüz blog yazısı bulunmamaktadır.
+                </div>
+            }
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Kategoriler</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a asp-action="Index" class="text-decoration-none">
+                                <i class="bi bi-folder me-2"></i>Tüm Yazılar
+                            </a>
+                        </li>
+                        @if (ViewBag.Categories != null)
+                        {
+                            foreach (var category in ViewBag.Categories)
+                            {
+                                <li class="mb-2">
+                                    <a asp-action="Index" asp-route-categoryId="@category.Id" class="text-decoration-none">
+                                        <i class="bi bi-folder me-2"></i>@category.Name
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">İletişim</h5>
+                    <p>Hukuki danışmanlık için bizimle iletişime geçin.</p>
+                    <a asp-controller="Contact" asp-action="Index" class="btn btn-primary w-100">
+                        <i class="bi bi-envelope me-2"></i>İletişime Geç
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

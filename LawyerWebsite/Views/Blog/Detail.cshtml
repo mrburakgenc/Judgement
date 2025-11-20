@@ -1,0 +1,170 @@
+@model LawyerWebsite.Models.ViewModels.BlogPostViewModel
+@{
+    ViewData["Title"] = Model.Post.Title;
+    ViewData["MetaDescription"] = Model.Post.MetaDescription ?? Model.Post.Summary;
+    ViewData["MetaKeywords"] = Model.Post.MetaKeywords;
+    Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+
+<div class="page-content">
+<div class="container my-5">
+    <div class="row">
+        <!-- Blog Post -->
+        <div class="col-lg-8">
+            <article>
+                <!-- Category Badge -->
+                @if (Model.Post.Category != null)
+                {
+                    <a asp-action="Index" asp-route-categoryId="@Model.Post.Category.Id" class="badge bg-primary text-decoration-none mb-3">
+                        @Model.Post.Category.Name
+                    </a>
+                }
+
+                <!-- Title -->
+                <h1 class="mb-3">@Model.Post.Title</h1>
+
+                <!-- Meta Info -->
+                <div class="text-muted mb-4">
+                    <i class="bi bi-calendar me-1"></i>@Model.Post.PublishedAt?.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("tr-TR"))
+                    <i class="bi bi-eye ms-3 me-1"></i>@Model.Post.ViewCount görüntülenme
+                </div>
+
+                <!-- Featured Image -->
+                @if (!string.IsNullOrEmpty(Model.Post.FeaturedImage))
+                {
+                    <img src="@Model.Post.FeaturedImage" class="img-fluid rounded mb-4" alt="@Model.Post.Title">
+                }
+
+                <!-- Summary -->
+                @if (!string.IsNullOrEmpty(Model.Post.Summary))
+                {
+                    <div class="lead mb-4">
+                        @Model.Post.Summary
+                    </div>
+                }
+
+                <!-- Content -->
+                <div class="blog-content">
+                    @Html.Raw(Model.Post.Content)
+                </div>
+
+                <!-- Share Buttons -->
+                <div class="mt-5 pt-4 border-top">
+                    <h5>Bu yazıyı paylaş</h5>
+                    <div class="d-flex gap-2">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=@(Context.Request.Scheme + "://" + Context.Request.Host + Context.Request.Path)"
+                           target="_blank" class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-facebook me-1"></i>Facebook
+                        </a>
+                        <a href="https://twitter.com/intent/tweet?url=@(Context.Request.Scheme + "://" + Context.Request.Host + Context.Request.Path)&text=@Model.Post.Title"
+                           target="_blank" class="btn btn-outline-info btn-sm">
+                            <i class="bi bi-twitter me-1"></i>Twitter
+                        </a>
+                        <a href="https://www.linkedin.com/shareArticle?mini=true&url=@(Context.Request.Scheme + "://" + Context.Request.Host + Context.Request.Path)"
+                           target="_blank" class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-linkedin me-1"></i>LinkedIn
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Documents/Attachments -->
+                @{
+                    var documents = ViewBag.Documents as List<LawyerWebsite.Models.Entities.BlogPostDocument> ?? new List<LawyerWebsite.Models.Entities.BlogPostDocument>();
+                }
+
+                @if (documents.Any())
+                {
+                    <div class="mt-5 pt-4 border-top">
+                        <h5 class="mb-3"><i class="bi bi-file-earmark-arrow-down me-2"></i>Ekli Evraklar</h5>
+                        <div class="list-group">
+                            @foreach (var doc in documents)
+                            {
+                                <a href="/admin/blog/download-document/@doc.Id" class="list-group-item list-group-item-action d-flex align-items-center">
+                                    <div class="me-3">
+                                        <i class="@LawyerWebsite.Helpers.DocumentHelper.GetFileIcon(doc.FileType) text-primary" style="font-size: 2rem;"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1">@doc.DisplayName</h6>
+                                        @if (!string.IsNullOrEmpty(doc.Description))
+                                        {
+                                            <p class="mb-1 text-muted small">@doc.Description</p>
+                                        }
+                                        <small class="text-muted">
+                                            @LawyerWebsite.Helpers.DocumentHelper.FormatFileSize(doc.FileSize)
+                                            • @doc.DownloadCount indirilme
+                                        </small>
+                                    </div>
+                                    <div>
+                                        <i class="bi bi-download"></i>
+                                    </div>
+                                </a>
+                            }
+                        </div>
+                    </div>
+                }
+            </article>
+
+            <!-- Related Posts -->
+            @if (Model.RelatedPosts != null && Model.RelatedPosts.Any())
+            {
+                <div class="mt-5">
+                    <h4 class="mb-4">İlgili Yazılar</h4>
+                    <div class="row g-3">
+                        @foreach (var relatedPost in Model.RelatedPosts)
+                        {
+                            <div class="col-md-4">
+                                <div class="card h-100">
+                                    @if (!string.IsNullOrEmpty(relatedPost.FeaturedImage))
+                                    {
+                                        <img src="@relatedPost.FeaturedImage" class="card-img-top" alt="@relatedPost.Title" style="height: 150px; object-fit: cover;">
+                                    }
+                                    <div class="card-body">
+                                        <h6 class="card-title">
+                                            <a href="/blog/@relatedPost.Slug" class="text-decoration-none text-dark">@relatedPost.Title</a>
+                                        </h6>
+                                        <small class="text-muted">
+                                            <i class="bi bi-calendar me-1"></i>@relatedPost.PublishedAt?.ToString("dd.MM.yyyy")
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Kategoriler</h5>
+                    <ul class="list-unstyled">
+                        @if (Model.AllCategories != null)
+                        {
+                            foreach (var category in Model.AllCategories)
+                            {
+                                <li class="mb-2">
+                                    <a asp-controller="Blog" asp-action="Index" asp-route-categoryId="@category.Id" class="text-decoration-none">
+                                        <i class="bi bi-folder me-2"></i>@category.Name
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Hukuki Danışmanlık</h5>
+                    <p>Profesyonel destek için bizimle iletişime geçin.</p>
+                    <a asp-controller="Contact" asp-action="Index" class="btn btn-primary w-100">
+                        <i class="bi bi-envelope me-2"></i>İletişime Geç
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

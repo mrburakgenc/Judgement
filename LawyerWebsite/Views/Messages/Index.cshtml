@@ -1,0 +1,107 @@
+@model List<LawyerWebsite.Models.Entities.ContactMessage>
+@{
+    ViewData["Title"] = "Mesajlar";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="mb-4">
+    <h2><i class="bi bi-envelope me-2"></i>İletişim Mesajları</h2>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        @if (Model != null && Model.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Ad Soyad</th>
+                            <th>E-posta</th>
+                            <th>Konu</th>
+                            <th>Tarih</th>
+                            <th>Durum</th>
+                            <th style="width: 150px;">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var message in Model)
+                        {
+                            <tr class="@(!message.IsRead ? "table-light fw-bold" : "")">
+                                <td>
+                                    @message.FullName
+                                    @if (!message.IsRead)
+                                    {
+                                        <i class="bi bi-circle-fill text-primary" style="font-size: 0.5rem;"></i>
+                                    }
+                                </td>
+                                <td>@message.Email</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(message.Subject))
+                                    {
+                                        <span>@message.Subject</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Konu belirtilmemiş</span>
+                                    }
+                                </td>
+                                <td>
+                                    <small>@message.CreatedAt.ToString("dd.MM.yyyy HH:mm")</small>
+                                </td>
+                                <td>
+                                    @if (message.IsReplied)
+                                    {
+                                        <span class="badge bg-success">Cevaplanmış</span>
+                                    }
+                                    else if (message.IsRead)
+                                    {
+                                        <span class="badge bg-info">Okunmuş</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning">Yeni</span>
+                                    }
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a asp-action="Detail" asp-route-id="@message.Id" class="btn btn-outline-primary" title="Görüntüle">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-outline-danger" onclick="confirmDelete(@message.Id)" title="Sil">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-5">
+                <i class="bi bi-envelope text-muted" style="font-size: 4rem;"></i>
+                <p class="text-muted mt-3">Henüz mesaj bulunmamaktadır.</p>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Delete Form -->
+<form id="deleteForm" method="post" style="display: none;">
+    @Html.AntiForgeryToken()
+</form>
+
+@section Scripts {
+    <script>
+        function confirmDelete(id) {
+            if (confirm('Bu mesajı silmek istediğinizden emin misiniz?')) {
+                const form = document.getElementById('deleteForm');
+                form.action = '/admin/messages/delete/' + id;
+                form.submit();
+            }
+        }
+    </script>
+}

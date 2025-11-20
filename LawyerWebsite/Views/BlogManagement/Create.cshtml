@@ -1,0 +1,137 @@
+@model LawyerWebsite.Models.ViewModels.Admin.BlogPostCreateViewModel
+@{
+    ViewData["Title"] = "Yeni Blog Yazısı";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="mb-4">
+    <h2><i class="bi bi-plus-circle me-2"></i>Yeni Blog Yazısı</h2>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="Index">Blog Yazıları</a></li>
+            <li class="breadcrumb-item active">Yeni Yazı</li>
+        </ol>
+    </nav>
+</div>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label asp-for="Title" class="form-label"></label>
+                        <input asp-for="Title" class="form-control form-control-lg" placeholder="Blog yazısı başlığını girin" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Summary" class="form-label"></label>
+                        <textarea asp-for="Summary" class="form-control" rows="3" placeholder="Kısa özet (isteğe bağlı)"></textarea>
+                        <span asp-validation-for="Summary" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Content" class="form-label"></label>
+                        <textarea asp-for="Content" class="form-control" rows="15" placeholder="İçerik buraya yazılacak"></textarea>
+                        <span asp-validation-for="Content" class="text-danger"></span>
+                        <small class="text-muted">HTML etiketleri kullanabilirsiniz.</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEO Settings -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-search me-2"></i>SEO Ayarları</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label asp-for="MetaTitle" class="form-label"></label>
+                        <input asp-for="MetaTitle" class="form-control" placeholder="Başlık ile aynı olacak (isteğe bağlı)" />
+                        <span asp-validation-for="MetaTitle" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="MetaDescription" class="form-label"></label>
+                        <textarea asp-for="MetaDescription" class="form-control" rows="2" placeholder="Meta açıklama (isteğe bağlı)"></textarea>
+                        <span asp-validation-for="MetaDescription" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="MetaKeywords" class="form-label"></label>
+                        <input asp-for="MetaKeywords" class="form-control" placeholder="anahtar, kelimeler, virgül, ile" />
+                        <span asp-validation-for="MetaKeywords" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Document Upload -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-file-earmark-pdf me-2"></i>Evraklar / Dökümanlar</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-0">
+                        <label asp-for="DocumentFiles" class="form-label"></label>
+                        <input asp-for="DocumentFiles" class="form-control" type="file" multiple
+                               accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.zip,.rar" />
+                        <small class="text-muted">
+                            PDF, Word, Excel, PowerPoint, ZIP (Max 10MB her biri)<br/>
+                            Birden fazla dosya seçebilirsiniz. İsim ve açıklama düzenleme için kayıt sonrası düzenleme sayfasından yapabilirsiniz.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-gear me-2"></i>Yayın Ayarları</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label asp-for="CategoryId" class="form-label"></label>
+                        <select asp-for="CategoryId" class="form-select">
+                            <option value="">Kategori Seçin</option>
+                            @foreach (var category in ViewBag.Categories)
+                            {
+                                <option value="@category.Id">@category.Name</option>
+                            }
+                        </select>
+                        <span asp-validation-for="CategoryId" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input asp-for="IsPublished" class="form-check-input" />
+                            <label asp-for="IsPublished" class="form-check-label"></label>
+                        </div>
+                        <small class="text-muted">Taslak olarak kaydetmek için işareti kaldırın</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="FeaturedImageFile" class="form-label"></label>
+                        <input asp-for="FeaturedImageFile" class="form-control" type="file" accept="image/*" />
+                        <span asp-validation-for="FeaturedImageFile" class="text-danger"></span>
+                        <small class="text-muted">JPG, PNG, GIF (Max 5MB)</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="bi bi-check-circle me-2"></i>Kaydet
+                </button>
+                <a asp-action="Index" class="btn btn-outline-secondary">
+                    <i class="bi bi-x-circle me-2"></i>İptal
+                </a>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

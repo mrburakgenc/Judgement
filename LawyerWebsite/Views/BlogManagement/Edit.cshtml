@@ -1,0 +1,252 @@
+@model LawyerWebsite.Models.ViewModels.Admin.BlogPostEditViewModel
+@{
+    ViewData["Title"] = "Blog Yazısını Düzenle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="mb-4">
+    <h2><i class="bi bi-pencil me-2"></i>Blog Yazısını Düzenle</h2>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="Index">Blog Yazıları</a></li>
+            <li class="breadcrumb-item active">Düzenle</li>
+        </ol>
+    </nav>
+</div>
+
+<form asp-action="Edit" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="CurrentFeaturedImage" />
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label asp-for="Title" class="form-label"></label>
+                        <input asp-for="Title" class="form-control form-control-lg" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Summary" class="form-label"></label>
+                        <textarea asp-for="Summary" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Summary" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Content" class="form-label"></label>
+                        <textarea asp-for="Content" class="form-control" rows="15"></textarea>
+                        <span asp-validation-for="Content" class="text-danger"></span>
+                        <small class="text-muted">HTML etiketleri kullanabilirsiniz.</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEO Settings -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-search me-2"></i>SEO Ayarları</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label asp-for="MetaTitle" class="form-label"></label>
+                        <input asp-for="MetaTitle" class="form-control" />
+                        <span asp-validation-for="MetaTitle" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="MetaDescription" class="form-label"></label>
+                        <textarea asp-for="MetaDescription" class="form-control" rows="2"></textarea>
+                        <span asp-validation-for="MetaDescription" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="MetaKeywords" class="form-label"></label>
+                        <input asp-for="MetaKeywords" class="form-control" />
+                        <span asp-validation-for="MetaKeywords" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-gear me-2"></i>Yayın Ayarları</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label asp-for="CategoryId" class="form-label"></label>
+                        <select asp-for="CategoryId" class="form-select">
+                            <option value="">Kategori Seçin</option>
+                            @foreach (var category in ViewBag.Categories)
+                            {
+                                <option value="@category.Id">@category.Name</option>
+                            }
+                        </select>
+                        <span asp-validation-for="CategoryId" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input asp-for="IsPublished" class="form-check-input" />
+                            <label asp-for="IsPublished" class="form-check-label"></label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        @if (!string.IsNullOrEmpty(Model.CurrentFeaturedImage))
+                        {
+                            <label class="form-label">Mevcut Görsel</label>
+                            <img src="@Model.CurrentFeaturedImage" class="img-fluid rounded mb-2" alt="Current image" />
+                        }
+
+                        <label asp-for="FeaturedImageFile" class="form-label">Yeni Görsel</label>
+                        <input asp-for="FeaturedImageFile" class="form-control" type="file" accept="image/*" />
+                        <span asp-validation-for="FeaturedImageFile" class="text-danger"></span>
+                        <small class="text-muted">JPG, PNG, GIF (Max 5MB). Boş bırakılırsa mevcut görsel korunur.</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="bi bi-check-circle me-2"></i>Güncelle
+                </button>
+                <a asp-action="Index" class="btn btn-outline-secondary">
+                    <i class="bi bi-x-circle me-2"></i>İptal
+                </a>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- Document Management -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-file-earmark-pdf me-2"></i>Evraklar / Dökümanlar</h5>
+            </div>
+            <div class="card-body">
+                <!-- Upload Form -->
+                <form asp-action="UploadDocument" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data" class="mb-4">
+                    @Html.AntiForgeryToken()
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label for="documentFile" class="form-label">Dosya Seç</label>
+                            <input type="file" class="form-control" id="documentFile" name="documentFile" required
+                                   accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.zip,.rar" />
+                            <small class="text-muted">PDF, Word, Excel, PowerPoint, ZIP (Max 10MB)</small>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="displayName" class="form-label">Görünen Ad</label>
+                            <input type="text" class="form-control" id="displayName" name="displayName" placeholder="Örn: Başvuru Formu" />
+                        </div>
+                        <div class="col-md-3">
+                            <label for="description" class="form-label">Açıklama (İsteğe Bağlı)</label>
+                            <input type="text" class="form-control" id="description" name="description" placeholder="Kısa açıklama" />
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">&nbsp;</label>
+                            <button type="submit" class="btn btn-success w-100">
+                                <i class="bi bi-upload me-1"></i>Yükle
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Documents List -->
+                @{
+                    var documents = ViewBag.Documents as List<LawyerWebsite.Models.Entities.BlogPostDocument> ?? new List<LawyerWebsite.Models.Entities.BlogPostDocument>();
+                }
+
+                @if (documents.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="width: 50px;"></th>
+                                    <th>Dosya Adı</th>
+                                    <th>Açıklama</th>
+                                    <th>Boyut</th>
+                                    <th>İndirilme</th>
+                                    <th>Tarih</th>
+                                    <th style="width: 100px;">İşlem</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var doc in documents)
+                                {
+                                    <tr>
+                                        <td class="text-center">
+                                            <i class="@LawyerWebsite.Helpers.DocumentHelper.GetFileIcon(doc.FileType) text-primary" style="font-size: 1.5rem;"></i>
+                                        </td>
+                                        <td>
+                                            <strong>@doc.DisplayName</strong><br />
+                                            <small class="text-muted">@doc.FileName</small>
+                                        </td>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(doc.Description))
+                                            {
+                                                <span>@doc.Description</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">-</span>
+                                            }
+                                        </td>
+                                        <td>@LawyerWebsite.Helpers.DocumentHelper.FormatFileSize(doc.FileSize)</td>
+                                        <td>
+                                            <i class="bi bi-download me-1"></i>@doc.DownloadCount
+                                        </td>
+                                        <td>
+                                            <small class="text-muted">@doc.UploadedAt.ToString("dd.MM.yyyy")</small>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <a href="/admin/blog/download-document/@doc.Id" class="btn btn-outline-info" title="İndir">
+                                                    <i class="bi bi-download"></i>
+                                                </a>
+                                                <button type="button" class="btn btn-outline-danger" onclick="deleteDocument(@doc.Id)" title="Sil">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info mb-0">
+                        <i class="bi bi-info-circle me-2"></i>Henüz evrak eklenmemiş. Yukarıdaki formu kullanarak evrak ekleyebilirsiniz.
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Document Form -->
+<form id="deleteDocumentForm" method="post" style="display: none;">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="blogPostId" value="@Model.Id" />
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function deleteDocument(id) {
+            if (confirm('Bu evrakı silmek istediğinizden emin misiniz?')) {
+                const form = document.getElementById('deleteDocumentForm');
+                form.action = '/admin/blog/delete-document/' + id;
+                form.submit();
+            }
+        }
+    </script>
+}

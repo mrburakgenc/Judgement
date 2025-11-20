@@ -1,0 +1,354 @@
+@model List<LawyerWebsite.Models.Entities.BlogPost>
+@{
+    ViewData["Title"] = "Ana Sayfa";
+    Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+
+<!-- Hero Section -->
+<section class="pb_cover_v1 text-left cover-bg-black cover-bg-opacity-4" style="background-image: url(/law-assets/images/1900x1200_img_7.jpg)" id="section-home">
+    <div class="container">
+        <div class="row align-items-center justify-content-end">
+            <div class="col-md-6 order-md-1">
+                <h2 class="heading mb-3">Avukatlık Bürosu</h2>
+                <div class="sub-heading">
+                    <p class="mb-5">Hukuki sorunlarınız için profesyonel çözüm ortağınız</p>
+                    <p><a href="#section-contact" role="button" class="btn smoothscroll pb_outline-light btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Ücretsiz Danışmanlık</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="pb_section pb_section_v1" data-section="about" id="section-about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 pr-md-5 pr-sm-0">
+                <h2 class="mt-0 heading-border-top mb-3 font-weight-normal">Biz Kimiz</h2>
+                <p>Avukatlık büromuz, yıllara dayanan deneyimi ve uzman kadrosuyla müvekkillerine en kaliteli hukuki hizmeti sunmayı amaçlamaktadır.</p>
+                <p>Aile hukuku, ticaret hukuku, ceza hukuku ve iş hukuku alanlarında uzmanlaşmış ekibimiz, her zaman yanınızdadır.</p>
+            </div>
+            <div class="col-lg-7">
+                <div class="images">
+                    <img class="img1 img-fluid" src="/law-assets/images/600x450_img_2.jpg" alt="Hakkımızda">
+                    <img class="img2" src="/law-assets/images/800x500_img_1.jpg" alt="Ekibimiz">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="pb_section bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md">
+                <div class="media pb_media_v2 d-block text-center mb-3">
+                    <div class="icon border border-gray rounded-circle d-flex align-items-center justify-content-center mr-3 display-4 mx-auto mb-4" style="width: 100px; height: 100px;">
+                        <i class="fa fa-users text-secondary" style="font-size: 3rem;"></i>
+                    </div>
+                    <div class="media-body">
+                        <h3 class="mt-0 pb_font-20">Uzman Kadro</h3>
+                        <p>Deneyimli avukatlarımızla en iyi hukuki hizmeti sunuyoruz.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="media pb_media_v2 d-block text-center mb-3">
+                    <div class="icon border border-gray rounded-circle d-flex align-items-center justify-content-center mr-3 display-4 mx-auto mb-4" style="width: 100px; height: 100px;">
+                        <i class="fa fa-balance-scale text-secondary" style="font-size: 3rem;"></i>
+                    </div>
+                    <div class="media-body">
+                        <h3 class="mt-0 pb_font-20">Adalet ve Hukuk</h3>
+                        <p>Hukuk devleti ilkesi çerçevesinde müvekkillerimizi temsil ediyoruz.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="media pb_media_v2 d-block text-center mb-3">
+                    <div class="icon border border-gray rounded-circle d-flex align-items-center justify-content-center mr-3 display-4 mx-auto mb-4" style="width: 100px; height: 100px;">
+                        <i class="fa fa-shield text-secondary" style="font-size: 3rem;"></i>
+                    </div>
+                    <div class="media-body">
+                        <h3 class="mt-0 pb_font-20">Güvenilirlik</h3>
+                        <p>Müvekkillerimizin haklarını en üst düzeyde korumak için çalışıyoruz.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="pb_sm_py_cover text-center cover-bg-black cover-bg-opacity-4" style="background-image: url(/law-assets/images/1900x1200_img_3.jpg)">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <h2 class="heading mb-3">Ücretsiz Danışmanlık</h2>
+                <p class="sub-heading mb-5 pb_color-light-opacity-8">Hukuki sorunlarınız için profesyonel destek almak ister misiniz?</p>
+                <p><a href="#section-contact" role="button" class="btn smoothscroll pb_outline-light p-3 rounded-0 pb_font-13 pb_letter-spacing-2">Hemen İletişime Geçin</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Us Section -->
+<section class="pb_section" data-section="why-us" id="section-why-us">
+    <div class="container">
+        <div class="row justify-content-md-center text-center mb-5">
+            <div class="col-lg-7">
+                <h2 class="mt-0 heading-border-top font-weight-normal">Neden Bizi Seçmelisiniz</h2>
+                <p>Müvekkillerimize sunduğumuz kaliteli hizmet ve profesyonel yaklaşımımızla fark yaratıyoruz.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="media pb_feature-v2 text-left mb-1 mt-5">
+                    <div class="pb_icon d-flex mr-3 align-self-start pb_w-15"><i class="fa fa-comments text-primary pb_icon-gradient" style="font-size: 3rem;"></i></div>
+                    <div class="media-body">
+                        <h3 class="mt-2 mb-2 heading">Ücretsiz Danışmanlık</h3>
+                        <p class="text-sans-serif">İlk görüşmenizde ücretsiz hukuki danışmanlık hizmeti sunuyoruz.</p>
+                    </div>
+                </div>
+
+                <div class="media pb_feature-v2 text-left mb-1 mt-5">
+                    <div class="pb_icon d-flex mr-3 align-self-start pb_w-15"><i class="fa fa-university text-primary pb_icon-gradient" style="font-size: 3rem;"></i></div>
+                    <div class="media-body">
+                        <h3 class="mt-2 mb-2 heading">Deneyimli Kadro</h3>
+                        <p class="text-sans-serif">Alanında uzman avukatlarımızla en iyi sonucu elde ediyoruz.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="media pb_feature-v2 text-left mb-1 mt-5">
+                    <div class="pb_icon d-flex mr-3 align-self-start pb_w-15"><i class="fa fa-balance-scale text-primary pb_icon-gradient" style="font-size: 3rem;"></i></div>
+                    <div class="media-body">
+                        <h3 class="mt-2 mb-2 heading">Kapsamlı Hizmet</h3>
+                        <p class="text-sans-serif">Aile, ticaret, ceza ve iş hukuku alanlarında hizmet veriyoruz.</p>
+                    </div>
+                </div>
+
+                <div class="media pb_feature-v2 text-left mb-1 mt-5">
+                    <div class="pb_icon d-flex mr-3 align-self-start pb_w-15"><i class="fa fa-trophy text-primary pb_icon-gradient" style="font-size: 3rem;"></i></div>
+                    <div class="media-body">
+                        <h3 class="mt-2 mb-2 heading">Güvenilir Çözümler</h3>
+                        <p class="text-sans-serif">Müvekkillerimizin menfaatlerini her zaman ön planda tutuyoruz.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Practicing Areas Section -->
+<section class="pb_section pb_bg-half" data-section="practicing-areas" id="section-practicing-areas">
+    <div class="container">
+        <div class="row justify-content-md-center text-center mb-5">
+            <div class="col-lg-7">
+                <h2 class="mt-0 heading-border-top font-weight-normal">Çalışma Alanlarımız</h2>
+                <p>Farklı hukuk dallarında uzman kadromuzla hizmetinizdeyiz.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-lg-3">
+                <div class="media pb_media_v1 text-center">
+                    <div class="pb_icon"><i class="fa fa-users text-primary pb_icon-gradient" style="font-size: 3rem;"></i></div>
+                    <div class="media-body">
+                        <h3 class="mt-0 pb_font-20">Aile Hukuku</h3>
+                        <p class="pb_font-14">Boşanma, velayet, nafaka davalarında yanınızdayız.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="media pb_media_v1 text-center">
+                    <div class="pb_icon"><i class="fa fa-gavel text-primary pb_icon-gradient" style="font-size: 3rem;"></i></div>
+                    <div class="media-body">
+                        <h3 class="mt-0 pb_font-20">Ceza Hukuku</h3>
+                        <p class="pb_font-14">Ceza davalarında savunma ve müdahillik hizmetleri.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="media pb_media_v1 text-center">
+                    <div class="pb_icon"><i class="fa fa-briefcase text-primary pb_icon-gradient" style="font-size: 3rem;"></i></div>
+                    <div class="media-body">
+                        <h3 class="mt-0 pb_font-20">Ticaret Hukuku</h3>
+                        <p class="pb_font-14">Şirket kuruluş, sözleşme ve ticari uyuşmazlıklar.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="media pb_media_v1 text-center">
+                    <div class="pb_icon"><i class="fa fa-id-badge text-primary pb_icon-gradient" style="font-size: 3rem;"></i></div>
+                    <div class="media-body">
+                        <h3 class="mt-0 pb_font-20">İş Hukuku</h3>
+                        <p class="pb_font-14">İşçi-işveren uyuşmazlıklarında hukuki destek.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Blog Section -->
+@if (Model != null && Model.Any())
+{
+    <section class="pb_section bg-light" style="padding-top: 80px; padding-bottom: 80px; overflow: visible;">
+        <div class="container" style="overflow: visible;">
+            <div class="row justify-content-md-center text-center mb-5">
+                <div class="col-lg-7">
+                    <h2 class="mt-0 heading-border-top font-weight-normal">Son Blog Yazıları</h2>
+                    <p>Hukuki konularda faydalı bilgiler ve güncel gelişmeler.</p>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 30px; padding-top: 20px; overflow: visible;">
+                @foreach (var post in Model.Take(3))
+                {
+                    <div class="col-md-4 mb-5 mt-3" style="overflow: visible;">
+                        <div class="card h-100 border-0 shadow-sm" style="overflow: visible; margin-top: 0; position: relative; min-height: 550px;">
+                            @if (!string.IsNullOrEmpty(post.FeaturedImage))
+                            {
+                                <img src="@post.FeaturedImage" class="card-img-top" alt="@post.Title" style="height: 350px; object-fit: cover; border-radius: 8px 8px 0 0; margin-bottom: 0;">
+                            }
+                            else
+                            {
+                                <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 350px; border-radius: 8px 8px 0 0; margin-bottom: 0;">
+                                    <i class="fa fa-file text-white" style="font-size: 4rem;"></i>
+                                </div>
+                            }
+                            <div class="card-body" style="padding: 1.5rem; margin-top: 65px;">
+                                @if (post.Category != null)
+                                {
+                                    <span class="badge bg-primary mb-2">@post.Category.Name</span>
+                                }
+                                <h5 class="card-title">@post.Title</h5>
+                                <p class="card-text text-muted">@post.Summary</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <small class="text-muted">
+                                        <i class="ion-ios-calendar-outline mr-1"></i>@post.PublishedAt?.ToString("dd.MM.yyyy")
+                                    </small>
+                                    <a href="/blog/@post.Slug" class="btn btn-sm btn-outline-primary">Devamını Oku</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="text-center mt-4">
+                <a href="/blog" class="btn pb_btn-pill btn-primary btn-shadow-blue">
+                    Tüm Blog Yazıları
+                </a>
+            </div>
+        </div>
+    </section>
+}
+
+<!-- Contact Section -->
+<section class="pb_section" data-section="contact" id="section-contact">
+    <div class="container">
+        <div class="row justify-content-md-center text-center mb-5">
+            <div class="col-lg-7">
+                <h2 class="mt-0 heading-border-top font-weight-normal">İletişim</h2>
+                <p>Hukuki sorunlarınız için bizimle iletişime geçebilirsiniz.</p>
+            </div>
+        </div>
+        @if (TempData["Success"] != null)
+        {
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="fa fa-check-circle me-2"></i>@TempData["Success"]
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="fa fa-exclamation-circle me-2"></i>@TempData["Error"]
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-md-6 mb-5">
+                <form asp-controller="Contact" asp-action="Index" method="post" class="pb_form">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control pb_height-50 reverse" name="FullName" placeholder="Adınız Soyadınız" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="email" class="form-control pb_height-50 reverse" name="Email" placeholder="Email Adresiniz" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="tel" class="form-control pb_height-50 reverse" name="Phone" placeholder="Telefon Numaranız">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control pb_height-50 reverse" name="Subject" placeholder="Konu">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <textarea name="Message" cols="30" rows="7" class="form-control pb_height-100 reverse" placeholder="Mesajınız" required></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="submit" class="btn pb_btn-pill btn-primary btn-shadow-blue" value="Gönder">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12 pb_font-18 pb_mb-30">
+                        <h3>İletişim Bilgileri</h3>
+                    </div>
+                    <div class="col-md-12">
+                        <p class="pb_font-14"><i class="ion-ios-location-outline mr-2"></i> Adres: [Adres Bilgisi]</p>
+                    </div>
+                    <div class="col-md-12">
+                        <p class="pb_font-14"><i class="ion-ios-telephone-outline mr-2"></i> Telefon: [Telefon Numarası]</p>
+                    </div>
+                    <div class="col-md-12">
+                        <p class="pb_font-14"><i class="ion-ios-email-outline mr-2"></i> Email: [Email Adresi]</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Harita -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="map-container" style="height: 400px; border-radius: 8px; overflow: hidden;">
+                    <iframe
+                        src="https://www.google.com/maps?q=40.721772200647045,29.94977634018687&hl=tr&z=15&output=embed"
+                        width="100%"
+                        height="400"
+                        style="border:0;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,94 @@
+@{
+    ViewData["Title"] = "Hakkımda";
+}
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="mb-4">Hakkımda</h1>
+
+            <div class="row mb-5">
+                <div class="col-md-4 text-center mb-4">
+                    <div class="bg-light p-4 rounded">
+                        <i class="bi bi-person-circle text-primary" style="font-size: 8rem;"></i>
+                        <h4 class="mt-3">Av. [İsim Soyisim]</h4>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <h3>Profesyonel Deneyim</h3>
+                    <p class="lead">
+                        [Buraya avukatın özgeçmişi ve deneyimi eklenecek]
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+                    </p>
+                </div>
+            </div>
+
+            <div class="mb-5">
+                <h3 class="mb-3">Eğitim</h3>
+                <ul class="list-unstyled">
+                    <li class="mb-3">
+                        <i class="bi bi-mortarboard-fill text-primary me-2"></i>
+                        <strong>Hukuk Fakültesi</strong> - [Üniversite Adı]
+                    </li>
+                    <li class="mb-3">
+                        <i class="bi bi-mortarboard-fill text-primary me-2"></i>
+                        <strong>Yüksek Lisans</strong> - [Alan] (Varsa)
+                    </li>
+                </ul>
+            </div>
+
+            <div class="mb-5">
+                <h3 class="mb-3">Uzmanlık Alanları</h3>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <i class="bi bi-people-fill text-primary me-2"></i>
+                                <strong>Aile Hukuku</strong>
+                                <p class="text-muted mb-0 mt-2">Boşanma, velayet, nafaka davaları</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <i class="bi bi-briefcase-fill text-primary me-2"></i>
+                                <strong>Ticaret Hukuku</strong>
+                                <p class="text-muted mb-0 mt-2">Şirket kuruluşu, ticari sözleşmeler</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <i class="bi bi-shield-fill-exclamation text-primary me-2"></i>
+                                <strong>Ceza Hukuku</strong>
+                                <p class="text-muted mb-0 mt-2">Ceza davaları ve savunma</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <i class="bi bi-building text-primary me-2"></i>
+                                <strong>İş Hukuku</strong>
+                                <p class="text-muted mb-0 mt-2">İşe iade, kıdem tazminatı</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-light p-4 rounded text-center">
+                <h4>Hukuki Danışmanlık İhtiyacınız mı Var?</h4>
+                <p class="mb-3">Profesyonel destek için bizimle iletişime geçin</p>
+                <a asp-controller="Contact" asp-action="Index" class="btn btn-primary">
+                    <i class="bi bi-envelope me-2"></i>İletişime Geçin
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

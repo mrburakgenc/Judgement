@@ -1,0 +1,137 @@
+@model LawyerWebsite.Models.Entities.ContactMessage
+@{
+    ViewData["Title"] = "Mesaj Detayı";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="mb-4">
+    <h2><i class="bi bi-envelope-open me-2"></i>Mesaj Detayı</h2>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="Index">Mesajlar</a></li>
+            <li class="breadcrumb-item active">Detay</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">@(Model.Subject ?? "Konu belirtilmemiş")</h5>
+                    @if (Model.IsReplied)
+                    {
+                        <span class="badge bg-success">Cevaplanmış</span>
+                    }
+                    else if (Model.IsRead)
+                    {
+                        <span class="badge bg-info">Okunmuş</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning">Yeni</span>
+                    }
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="mb-4 pb-3 border-bottom">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="mb-2">
+                                <strong><i class="bi bi-person me-2"></i>Gönderen:</strong><br />
+                                @Model.FullName
+                            </p>
+                            <p class="mb-2">
+                                <strong><i class="bi bi-envelope me-2"></i>E-posta:</strong><br />
+                                <a href="mailto:@Model.Email">@Model.Email</a>
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            @if (!string.IsNullOrEmpty(Model.Phone))
+                            {
+                                <p class="mb-2">
+                                    <strong><i class="bi bi-telephone me-2"></i>Telefon:</strong><br />
+                                    <a href="tel:@Model.Phone">@Model.Phone</a>
+                                </p>
+                            }
+                            <p class="mb-2">
+                                <strong><i class="bi bi-calendar me-2"></i>Tarih:</strong><br />
+                                @Model.CreatedAt.ToString("dd MMMM yyyy HH:mm", new System.Globalization.CultureInfo("tr-TR"))
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h6 class="text-muted mb-2">Mesaj İçeriği:</h6>
+                    <div class="bg-light p-3 rounded">
+                        @Model.Message
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <a href="mailto:@Model.Email?subject=Re: @(Model.Subject)" class="btn btn-primary">
+                        <i class="bi bi-reply me-2"></i>E-posta ile Cevapla
+                    </a>
+
+                    @if (!Model.IsReplied)
+                    {
+                        <form asp-action="MarkReplied" asp-route-id="@Model.Id" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-check-circle me-2"></i>Cevaplanmış Olarak İşaretle
+                            </button>
+                        </form>
+                    }
+
+                    <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="d-inline" onsubmit="return confirm('Bu mesajı silmek istediğinizden emin misiniz?')">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-outline-danger">
+                            <i class="bi bi-trash me-2"></i>Sil
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-info-circle me-2"></i>Bilgi</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2">
+                        <strong>Durum:</strong>
+                        @if (Model.IsReplied)
+                        {
+                            <span class="text-success">Cevaplanmış</span>
+                        }
+                        else if (Model.IsRead)
+                        {
+                            <span class="text-info">Okunmuş</span>
+                        }
+                        else
+                        {
+                            <span class="text-warning">Yeni</span>
+                        }
+                    </li>
+                    <li class="mb-2">
+                        <strong>Alındı:</strong><br />
+                        @Model.CreatedAt.ToString("dd.MM.yyyy HH:mm")
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-body">
+                <a asp-action="Index" class="btn btn-outline-secondary w-100">
+                    <i class="bi bi-arrow-left me-2"></i>Mesajlara Dön
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

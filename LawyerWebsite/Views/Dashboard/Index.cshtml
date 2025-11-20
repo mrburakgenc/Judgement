@@ -1,0 +1,120 @@
+@model LawyerWebsite.Models.ViewModels.Admin.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-speedometer2 me-2"></i>Dashboard</h2>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title text-uppercase mb-1">Toplam Yazı</h6>
+                        <h2 class="mb-0">@Model.TotalPosts</h2>
+                    </div>
+                    <i class="bi bi-file-text" style="font-size: 3rem; opacity: 0.5;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title text-uppercase mb-1">Yayınlanan</h6>
+                        <h2 class="mb-0">@Model.PublishedPosts</h2>
+                    </div>
+                    <i class="bi bi-check-circle" style="font-size: 3rem; opacity: 0.5;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title text-uppercase mb-1">Kategoriler</h6>
+                        <h2 class="mb-0">@Model.TotalCategories</h2>
+                    </div>
+                    <i class="bi bi-folder" style="font-size: 3rem; opacity: 0.5;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title text-uppercase mb-1">Okunmamış Mesaj</h6>
+                        <h2 class="mb-0">@Model.UnreadMessages</h2>
+                    </div>
+                    <i class="bi bi-envelope" style="font-size: 3rem; opacity: 0.5;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row g-3">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-lightning-fill me-2"></i>Hızlı İşlemler</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a asp-controller="BlogManagement" asp-action="Create" class="btn btn-primary">
+                        <i class="bi bi-plus-circle me-2"></i>Yeni Blog Yazısı
+                    </a>
+                    <a asp-controller="Category" asp-action="Create" class="btn btn-outline-primary">
+                        <i class="bi bi-folder-plus me-2"></i>Yeni Kategori
+                    </a>
+                    <a asp-controller="Messages" asp-action="Index" class="btn btn-outline-warning">
+                        <i class="bi bi-envelope me-2"></i>Mesajları Görüntüle
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-graph-up me-2"></i>İstatistikler</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-1">
+                        <span>Toplam Görüntülenme</span>
+                        <strong>@Model.TotalViews</strong>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar bg-primary" style="width: 100%"></div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-1">
+                        <span>Yayın Oranı</span>
+                        <strong>@(Model.TotalPosts > 0 ? Math.Round((double)Model.PublishedPosts / Model.TotalPosts * 100, 1) : 0)%</strong>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar bg-success" style="width: @(Model.TotalPosts > 0 ? (double)Model.PublishedPosts / Model.TotalPosts * 100 : 0)%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
